@@ -141,7 +141,7 @@ class DigikalaProductScraper:
 
         print("Extracting comments...")
         comments = []
-        while True:
+        for i in range(51):
             try:
                 soup = BeautifulSoup(self.driver.page_source, 'html.parser')
                 comments_soup = soup.select('#commentSection article')
@@ -246,13 +246,10 @@ class DigikalaProductScraper:
 if __name__ == '__main__':
     products = [
         {
-            'url': 'https://www.digikala.com/product/dkp-12017522/%D9%87%D9%86%D8%AF%D8%B2%D9%81%D8%B1%DB%8C-%D9%84%DB%8C%D8%AA%D9%88-%D9%85%D8%AF%D9%84-le-16/',
+            'url': 'https://www.digikala.com/product/dkp-525833/%D8%AE%D9%85%DB%8C%D8%B1-%D8%AF%D9%86%D8%AF%D8%A7%D9%86-%D9%85%D8%B1%DB%8C%D8%AF%D9%86%D8%AA-%D9%85%D8%AF%D9%84-7-complete-%D9%85%D9%82%D8%AF%D8%A7%D8%B1-130-%DA%AF%D8%B1%D9%85/',
             'sort_by': "جدیدترین"
         },
-        {
-            'url': 'https://www.digikala.com/product/dkp-11096212/%DA%AF%D9%88%D8%B4%DB%8C-%D9%85%D9%88%D8%A8%D8%A7%DB%8C%D9%84-%D8%B1%DB%8C%D9%84%D9%85%DB%8C-%D9%85%D8%AF%D9%84-narzo-50a-prime-%D8%AF%D9%88-%D8%B3%DB%8C%D9%85-%DA%A9%D8%A7%D8%B1%D8%AA-%D8%B8%D8%B1%D9%81%DB%8C%D8%AA-128-%DA%AF%DB%8C%DA%AF%D8%A7%D8%A8%D8%A7%DB%8C%D8%AA-%D9%88-%D8%B1%D9%85-4-%DA%AF%DB%8C%DA%AF%D8%A7%D8%A8%D8%A7%DB%8C%D8%AA/',
-            'sort_by': "جدیدترین",
-        },
+
     ]
     scraper = DigikalaProductScraper()
     for product in products:
