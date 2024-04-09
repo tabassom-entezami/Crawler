@@ -206,6 +206,9 @@ class DigikalaProductScraper:
                 print(e)
                 break
 
+        price = price.replace(',', '')
+        discount = discount.replace(',', '')
+        percent = percent.replace('٪', '')
         price = int(price.translate(translation_table))
         discount = int(discount.translate(translation_table))
         percent = int(percent.translate(translation_table))
