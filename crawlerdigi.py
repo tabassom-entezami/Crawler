@@ -113,6 +113,19 @@ class DigikalaProductScraper:
         print("Extracting product details...")
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
         title = soup.select_one('h1.text-h4').get_text(strip=True)
+
+        discount = None
+        price = None
+        print("Extracting price ...")
+        try:
+            discount = soup.find('span', {'data-testid': 'price-no-discount'}).get_text()
+            price = soup.find('span',
+                              {'data-testid': 'price-final'}).get_text()
+        except:
+            price = soup.find('span',
+                              {'data-testid': 'price-no-discount'}).get_text()
+
+        print("Extracting rating and ...")
         rating_img = soup.select_one('img[alt="امتیاز"]')
         rating = rating_img.parent.parent.find_next_sibling('p', class_='text-body-2').get_text(strip=True)
         intab = '۱۲۳۴۵۶۷۸۹۰١٢٣٤٥٦٧٨٩٠'
@@ -133,10 +146,10 @@ class DigikalaProductScraper:
                     else:
                         comment_title = None
 
-                    comment_text = comment.select_one('p.text-body-1.text-neutral-900.mb-1.pt-3.break-words')\
+                    comment_text = comment.select_one('p.text-body-1.text-neutral-900.mb-1.pt-3.break-words') \
                         .get_text(strip=True)
 
-                    comment_author = comment.select_one('p.text-caption.text-neutral-400.inline')\
+                    comment_author = comment.select_one('p.text-caption.text-neutral-400.inline') \
                         .get_text(strip=True)
 
                     recommends_value = comment.select_one('div.flex.items-center.pt-2 > p')
@@ -189,6 +202,8 @@ class DigikalaProductScraper:
 
         data = {
             'title': title,
+            'price': price,
+            'discount': discount,
             'rating': rating,
             'comments': comments,
         }
