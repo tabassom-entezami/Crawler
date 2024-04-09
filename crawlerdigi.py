@@ -116,14 +116,20 @@ class DigikalaProductScraper:
 
         discount = None
         price = None
+        percent = None
         print("Extracting price ...")
         try:
             discount = soup.find('span', {'data-testid': 'price-no-discount'}).get_text()
             price = soup.find('span',
                               {'data-testid': 'price-final'}).get_text()
+            percent = soup.find('span',
+                                {'data-testid': 'price-discount-percent'}).get_text()
         except:
-            price = soup.find('span',
-                              {'data-testid': 'price-no-discount'}).get_text()
+            try:
+                price = soup.find('span',
+                                  {'data-testid': 'price-no-discount'}).get_text()
+            except:
+                pass
 
         print("Extracting rating and ...")
         rating_img = soup.select_one('img[alt="امتیاز"]')
@@ -200,10 +206,15 @@ class DigikalaProductScraper:
                 print(e)
                 break
 
+        price = int(price.translate(translation_table))
+        discount = int(discount.translate(translation_table))
+        percent = int(percent.translate(translation_table))
+
         data = {
             'title': title,
-            'price': price,
-            'discount': discount,
+            'price': discount,
+            'discount': price,
+            'percent': percent,
             'rating': rating,
             'comments': comments,
         }
